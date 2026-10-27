@@ -1,0 +1,73 @@
+/* =============== Colores: vienen de la paleta de la ETAPA ACTIVA (variables CSS) =============== */
+.saga-root {
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 600ms ease, color 600ms ease;
+}
+
+.saga-panel {
+  background: var(--bg);
+  transition: background-color 600ms ease;
+}
+
+.saga-surface {
+  background: var(--surface);
+  transition: background-color 600ms ease;
+}
+
+.saga-primary { color: var(--primary); }
+
+/* =============== Mapa =============== */
+.saga-sea { fill: color-mix(in oklab, var(--surface) 80%, #0c4a6e); }
+.saga-route-all { stroke: color-mix(in oklab, var(--text) 35%, transparent); }
+.saga-route-done {
+  stroke: var(--primary);
+  transition: stroke-dashoffset 700ms ease;
+}
+.saga-island circle { fill: color-mix(in oklab, var(--text) 45%, transparent); transition: r 300ms ease; }
+.saga-island.visited circle { fill: var(--accent); }
+.saga-island text { fill: var(--text); opacity: 0.85; }
+.saga-ship { transition: transform 700ms ease; }
+.saga-hull { fill: var(--primary); }
+.saga-sail { fill: var(--text); }
+
+/* =============== Progreso del recorrido =============== */
+.saga-progress-fill {
+  background: var(--primary);
+  transform-origin: left center;
+  /* Fallback (navegador sin soporte): JavaScript escribe --fallback-progress entre 0 y 1 */
+  transform: scaleX(var(--fallback-progress, 0));
+}
+
+/* CON soporte de CSS Scroll-driven Animations: la barra avanza con el scroll, sin JavaScript */
+@supports (animation-timeline: view()) and (timeline-scope: --a) {
+  .saga-root { timeline-scope: --saga; }
+  .saga-steps { view-timeline: --saga block; }
+  .saga-progress-fill {
+    animation: saga-progress linear both;
+    animation-timeline: --saga;
+    animation-range: contain 0% contain 100%;
+  }
+  @keyframes saga-progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* Entrada de cada etapa ligada al scroll: SOLO si el usuario no pidió reducir movimiento */
+  @media (prefers-reduced-motion: no-preference) {
+    .saga-step-card {
+      animation: saga-step-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+    @keyframes saga-step-in {
+      from { opacity: 0.25; transform: translateY(2rem); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+}
+
+/* =============== Reduced motion: todo se entiende igual, pero sin movimiento =============== */
+@media (prefers-reduced-motion: reduce) {
+  .saga-root, .saga-panel, .saga-surface, .saga-route-done, .saga-ship, .saga-island circle { transition: none; }
+}

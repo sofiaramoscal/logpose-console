@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+/* Pequeñas clases reutilizables construidas con utilidades de Tailwind */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-slate-700 px-3 py-1.5 text-sm text-slate-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-amber-400 px-4 py-2 text-sm font-medium text-slate-950 hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .input {
+    @apply rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:border-amber-400 focus:outline-none;
+  }
+  .card {
+    @apply rounded-xl border border-slate-800 bg-slate-900 p-4;
+  }
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-amber-400);
+    outline-offset: 2px;
+  }
+}
+
+/* Reduced motion: si el usuario lo pide, apagamos animaciones y scroll suave en toda la app */
+@media (prefers-reduced-motion: reduce) {
+  /* La barra de progreso NO se excluye por gusto: está ligada al scroll, no es movimiento autónomo */
+  *:not(.saga-progress-fill), *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
