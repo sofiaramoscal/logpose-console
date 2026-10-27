@@ -6,8 +6,8 @@ Consola de la Guild de Cazarrecompensas — Hackathon Frontend CS2031 DBP (One P
 
 | Nombre | Código |
 | --- | --- |
-| _completar_ | _completar_ |
-| _completar_ | _completar_ |
+| _aNTHONY_ | _202510031 |
+| _Sofia ramos_ | _2025_ |
 | _completar_ | _completar_ |
 
 ## Cómo ejecutar
